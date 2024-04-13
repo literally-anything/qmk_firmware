@@ -4,6 +4,6 @@ OPT_DEFS += -DNO_USB_STARTUP_CHECK -DENABLE_FACTORY_TEST
 
 SRC += matrix.c
 
-include keyboards/keychron/bluetooth/bluetooth.mk
+include keyboards/keychron_k/bluetooth/bluetooth.mk
 
 
