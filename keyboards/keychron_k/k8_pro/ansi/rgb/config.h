@@ -43,7 +43,7 @@
 /* Allow shutdown of led driver to save power */
 //#    define RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE
 /* Turn off backlight on low brightness to save power */
-#    define RGB_MATRIX_BRIGHTNESS_TURN_OFF_VAL 32
+//#    define RGB_MATRIX_BRIGHTNESS_TURN_OFF_VAL 32
 
 /* RGB Matrix Animation modes. Explicitly enabled
  * For full list of effects, see:

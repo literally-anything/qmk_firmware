@@ -293,6 +293,8 @@ void battery_calculte_voltage(uint16_t value) {
     battery_set_voltage(voltage);
 }
 
+__attribute__((weak)) void via_command_user(uint8_t *data, uint8_t length) {}
+
 bool via_command_kb(uint8_t *data, uint8_t length) {
     switch (data[0]) {
 #ifdef KC_BLUETOOTH_ENABLE
@@ -305,6 +307,9 @@ bool via_command_kb(uint8_t *data, uint8_t length) {
             factory_test_rx(data, length);
             break;
 #endif
+        case 0xFF:
+            via_command_user(data, length);
+            break;
         default:
             return false;
     }
