@@ -136,6 +136,17 @@ transport_t get_transport(void) {
     return transport;
 }
 
+static transport_t default_transport = TRANSPORT_USB;
+
+void set_default_transport(transport_t first_transport) {
+    default_transport = first_transport;
+    set_transport(first_transport);
+}
+
+transport_t get_default_transport() {
+    return default_transport;
+}
+
 /* Changing transport may cause bronw-out reset of led driver
  * withoug MCU reset, which lead backlight to not work,
  * reinit the led driver workgound this issue */

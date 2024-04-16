@@ -41,11 +41,13 @@ enum {
     KC_CTANA,
     KC_SIRI,
 #ifdef KC_BLUETOOTH_ENABLE
+    BT_USB,
     BT_HST1,
     BT_HST2,
     BT_HST3,
     BAT_LVL,
 #else
+    BT_USB = KC_TRNS,
     BT_HST1 = KC_TRNS,
     BT_HST2 = KC_TRNS,
     BT_HST3 = KC_TRNS,

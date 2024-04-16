@@ -111,8 +111,18 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             }
             return false; // Skip all further processing of this key
 #ifdef KC_BLUETOOTH_ENABLE
+        case BT_USB:
+            if (get_default_transport() == TRANSPORT_BLUETOOTH) {
+                if (get_transport() != TRANSPORT_USB) {
+                    set_transport(TRANSPORT_USB);
+                }
+            }
+            break;
         case BT_HST1 ... BT_HST3:
-            if (get_transport() == TRANSPORT_BLUETOOTH) {
+            if (get_default_transport() == TRANSPORT_BLUETOOTH) {
+                if (get_transport() != TRANSPORT_BLUETOOTH) {
+                    set_transport(TRANSPORT_BLUETOOTH);
+                }
                 if (record->event.pressed) {
                     host_idx = keycode - BT_HST1 + 1;
                     chVTSet(&pairing_key_timer, TIME_MS2I(2000), (vtfunc_t)pairing_key_timer_cb, &host_idx);
@@ -124,9 +134,9 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case BAT_LVL:
-            if (get_transport() == TRANSPORT_BLUETOOTH && !usb_power_connected()) {
+            //if (get_transport() == TRANSPORT_BLUETOOTH && !usb_power_connected()) {
                 bat_level_animiation_start(battery_get_percentage());
-            }
+            //}
             break;
 #endif
         default:
@@ -258,7 +268,7 @@ void bluetooth_pre_task(void) {
     if (readPin(USB_BT_MODE_SELECT_PIN) != mode) {
         if (readPin(USB_BT_MODE_SELECT_PIN) != mode) {
             mode = readPin(USB_BT_MODE_SELECT_PIN);
-            set_transport(mode == 0 ? TRANSPORT_BLUETOOTH : TRANSPORT_USB);
+            set_default_transport(mode == 0 ? TRANSPORT_BLUETOOTH : TRANSPORT_USB);
         }
     }
 }

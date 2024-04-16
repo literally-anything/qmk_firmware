@@ -64,9 +64,9 @@ bool process_record_keychron_wireless(uint16_t keycode, keyrecord_t *record) {
             break;
 #if (defined(LED_MATRIX_ENABLE) || defined(RGB_MATRIX_ENABLE)) && defined(BAT_LEVEL_LED_LIST)
         case BAT_LVL:
-            if ((get_transport() & TRANSPORT_WIRELESS) && !usb_power_connected()) {
+            //if ((get_transport() & TRANSPORT_WIRELESS) && !usb_power_connected()) {
                 bat_level_animiation_start(battery_get_percentage());
-            }
+            //}
             break;
 #endif
 

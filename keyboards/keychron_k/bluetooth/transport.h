@@ -32,6 +32,9 @@ typedef struct {
 void        set_transport(transport_t new_transport);
 transport_t get_transport(void);
 
+void        set_default_transport(transport_t first_transport);
+transport_t get_default_transport(void);
+
 void bt_transport_enable(bool enable);
 void usb_power_connect(void);
 void usb_power_disconnect(void);
