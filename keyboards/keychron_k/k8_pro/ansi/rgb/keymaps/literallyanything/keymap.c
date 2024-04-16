@@ -85,15 +85,17 @@ enum {
 };
 
 void td_mic_fn(tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            register_code(KC_LGUI);
-            tap_code(KC_MUTE);
-            unregister_code(KC_LGUI);
+    if (get_default_transport() == TRANSPORT_USB) {
+        switch (state->count) {
+            case 1:
+                register_code(KC_LGUI);
+                tap_code(KC_MUTE);
+                unregister_code(KC_LGUI);
 
-            break;
-        default:
-            tap_code(KC_PSCR);
+                break;
+            default:
+                tap_code(KC_PSCR);
+        }
     }
 }
 
@@ -113,7 +115,10 @@ void leader_end_user() {
  	    tap_code(KC_L);
  	    unregister_code(KC_LGUI);
     }
-    leader_indicator_time = 254;
+    leader_keys_effect_state = true;
+    if ((leader_indicator_time & 1) != 0) {
+        leader_indicator_time--;
+    }
     leader_indicator = false;
 }
 
@@ -128,7 +133,7 @@ enum layers{
   MAC_FN,
   WIN_BASE,
   WIN_FN,
-  CUSTOM_0
+  CUSTOM
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -164,7 +169,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  BAT_LVL,  NK_TOGG,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS),
 
-[CUSTOM_0] = LAYOUT_tkl_ansi(
+[CUSTOM] = LAYOUT_tkl_ansi(
      KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,             KC_PSCR,  TD(TD_MIC),KC_PSCR,
      KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_INS,    KC_HOME,  KC_PGUP,
      KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,  KC_DEL,    KC_END,   KC_PGDN,
